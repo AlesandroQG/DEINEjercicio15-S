@@ -3,6 +3,9 @@ package com.alesandro.ejercicio15s.model;
 import java.sql.Blob;
 import java.time.LocalDate;
 
+/**
+ * Clase Animal
+ */
 public class Animal {
     private int id;
     private String nombre;
