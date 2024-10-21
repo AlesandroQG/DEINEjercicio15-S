@@ -1,5 +1,8 @@
 package com.alesandro.ejercicio15s.controller;
 
+import com.alesandro.ejercicio15s.dao.DaoAnimal;
+import com.alesandro.ejercicio15s.model.Animal;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -20,7 +23,7 @@ public class AnimalesController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //
+        ObservableList<Animal> animales = DaoAnimal.cargarListado();
     }
 
     /**

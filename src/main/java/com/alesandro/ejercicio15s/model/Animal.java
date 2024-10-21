@@ -1,6 +1,6 @@
 package com.alesandro.ejercicio15s.model;
 
-import java.sql.Blob;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -17,7 +17,7 @@ public class Animal {
     private int peso;
     private String observaciones;
     private LocalDate fecha_primera_consulta;
-    private Blob foto;
+    private InputStream foto;
 
     /**
      * Constructor con parámetros de animales
@@ -33,7 +33,7 @@ public class Animal {
      * @param fecha_primera_consulta del animal
      * @param foto del animal
      */
-    public Animal(int id, String nombre, String especie, String raza, String sexo, int edad, int peso, String observaciones, LocalDate fecha_primera_consulta, Blob foto) {
+    public Animal(int id, String nombre, String especie, String raza, String sexo, int edad, int peso, String observaciones, LocalDate fecha_primera_consulta, InputStream foto) {
         this.id = id;
         this.nombre = nombre;
         this.especie = especie;
@@ -218,7 +218,7 @@ public class Animal {
      *
      * @return foto del animal
      */
-    public Blob getFoto() {
+    public InputStream getFoto() {
         return foto;
     }
 
@@ -227,7 +227,7 @@ public class Animal {
      *
      * @param foto nueva foto del animal
      */
-    public void setFoto(Blob foto) {
+    public void setFoto(InputStream foto) {
         this.foto = foto;
     }
 
