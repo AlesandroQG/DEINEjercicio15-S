@@ -8,6 +8,7 @@ La estructura del proyecto es la siguiente:
         - `AnimalesApplication.java`: Clase que lanza la aplicación
         - `controller`:
             - `AnimalesController.java`: Clase que controla los eventos de la ventana principal de la aplicación
+            - `DatosAnimalController.java`: Clase que controla los eventos de la venta para añadir un nuevo animal o editar uno existente
         - `dao`:
             - `DaoAnimal.java`: Clase que hace las operaciones con la base de datos del modelo Animal
         - `db`:
@@ -16,11 +17,7 @@ La estructura del proyecto es la siguiente:
             - `Animal.java`: Clase que define el objeto Animal
     - `resources`:
         - `fxml`:
-            - `ActivarDesactivarAvion.fxml`: Ventana para activar/desactivar aviones
             - `Animales.fxml`: Ventana principal de la aplicación
-            - `AniadirAvion.fxml`: Ventana para añadir aviones
-            - `BorrarAvion.fxml`: Ventana para borrar aviones
-            - `DatosAeropuerto.fxml`: Ventana para añadir un nuevo aeropuerto o editar uno existente
-            - `Login.fxml`: Ventana para iniciar sesión en la aplicación
+            - `DatosAnimal.fxml`: Ventana para añadir un nuevo animal o editar uno existente
         - `images`: Imágenes de la aplicación
         - `style`: Estilos de la aplicación

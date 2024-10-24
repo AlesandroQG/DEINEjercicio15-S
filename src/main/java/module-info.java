@@ -2,6 +2,7 @@ module com.alesandro.ejercicio15s {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
+    requires java.desktop;
 
 
     opens com.alesandro.ejercicio15s to javafx.fxml;
