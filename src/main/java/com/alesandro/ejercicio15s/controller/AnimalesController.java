@@ -24,7 +24,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
- * Clase que controla los eventos de la ventana
+ * Clase que controla los eventos de la ventana principal
  */
 public class AnimalesController implements Initializable {
     @FXML // fx:id="btnEditar"

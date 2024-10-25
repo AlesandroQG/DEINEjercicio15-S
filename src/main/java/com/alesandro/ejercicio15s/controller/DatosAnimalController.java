@@ -20,6 +20,9 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ * Clase que controla los eventos de la ventana de datos de animal
+ */
 public class DatosAnimalController implements Initializable {
     private Animal animal;
     private Blob imagen;
