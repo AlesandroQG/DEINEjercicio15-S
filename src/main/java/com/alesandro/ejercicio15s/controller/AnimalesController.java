@@ -150,6 +150,7 @@ public class AnimalesController implements Initializable {
             if (result.get() == ButtonType.OK){
                 if (DaoAnimal.eliminar(animal)) {
                     confirmacion("Animal eliminado correctamente");
+                    cargarAnimales();
                 } else {
                     alerta("No se ha podido eliminar ese animal, por favor inténtelo de nuevo");
                 }
