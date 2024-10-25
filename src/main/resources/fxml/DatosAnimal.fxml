@@ -7,6 +7,7 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -44,7 +45,7 @@
                         <Label alignment="CENTER" text="Foto:" BorderPane.alignment="CENTER" />
                      </left>
                      <right>
-                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#seleccionImagen" text="Seleccionar" BorderPane.alignment="CENTER" />
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#seleccionImagen" styleClass="btnSeleccionar" text="Seleccionar" BorderPane.alignment="CENTER" />
                      </right>
                      <VBox.margin>
                         <Insets bottom="5.0" />
@@ -58,7 +59,7 @@
                         <Image url="@../images/animal.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="btnFotoBorrar" disable="true" mnemonicParsing="false" onAction="#borrarFoto" text="Borrar">
+                  <Button fx:id="btnFotoBorrar" disable="true" mnemonicParsing="false" onAction="#borrarFoto" styleClass="btnEliminar" text="Borrar">
                      <VBox.margin>
                         <Insets top="5.0" />
                      </VBox.margin>
@@ -124,20 +125,6 @@
          <children>
             <HBox alignment="CENTER">
                <children>
-                  <Label text="Peso:">
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
-                  </Label>
-                  <TextField fx:id="txtPeso" maxWidth="125.0">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER">
-               <children>
                   <Label text="Edad:">
                      <HBox.margin>
                         <Insets right="5.0" />
@@ -147,6 +134,26 @@
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
+                     <tooltip>
+                        <Tooltip text="Edad tiene que ser numérico" />
+                     </tooltip>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER">
+               <children>
+                  <Label text="Peso:">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="txtPeso" maxWidth="125.0">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <tooltip>
+                        <Tooltip text="Peso tiene que ser numérico" />
+                     </tooltip>
                   </TextField>
                </children>
             </HBox>
@@ -157,8 +164,8 @@
       </FlowPane>
       <GridPane hgap="5.0" vgap="5.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.0" minWidth="10.0" prefWidth="166.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="218.0" minWidth="10.0" prefWidth="209.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -179,8 +186,8 @@
       </FlowPane>
       <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="50.0">
          <children>
-            <Button defaultButton="true" mnemonicParsing="false" onAction="#guardar" text="Guardar" />
-            <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#guardar" styleClass="btnGuardar" text="Guardar" />
+            <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelar" styleClass="btnCancelar" text="Cancelar" />
          </children>
          <VBox.margin>
             <Insets top="10.0" />

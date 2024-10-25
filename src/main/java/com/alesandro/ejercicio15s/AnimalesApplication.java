@@ -3,6 +3,7 @@ package com.alesandro.ejercicio15s;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -25,6 +26,7 @@ public class AnimalesApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Animales.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Animales");
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/icono.png")));
         stage.setScene(scene);
         stage.show();
     }

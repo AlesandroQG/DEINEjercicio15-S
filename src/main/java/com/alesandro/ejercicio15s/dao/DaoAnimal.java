@@ -26,7 +26,7 @@ public class DaoAnimal {
         Animal animal = null;
         try {
             connection = new DBConnect();
-            String consulta = "SELECT id,nombre,especie,raza,sexo,edad,peso,observaciones,fecha_primera_consulta,foto FROM animales WHERE id = ?";
+            String consulta = "SELECT id,nombre,especie,raza,sexo,edad,peso,observaciones,fecha_primera_consulta,foto FROM Animales WHERE id = ?";
             PreparedStatement pstmt = connection.getConnection().prepareStatement(consulta);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
@@ -61,7 +61,7 @@ public class DaoAnimal {
         ObservableList<Animal> animales = FXCollections.observableArrayList();
         try{
             connection = new DBConnect();
-            String consulta = "SELECT id,nombre,especie,raza,sexo,edad,peso,observaciones,fecha_primera_consulta,foto FROM animales";
+            String consulta = "SELECT id,nombre,especie,raza,sexo,edad,peso,observaciones,fecha_primera_consulta,foto FROM Animales";
             PreparedStatement pstmt = connection.getConnection().prepareStatement(consulta);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -127,7 +127,7 @@ public class DaoAnimal {
         PreparedStatement pstmt;
         try {
             connection = new DBConnect();
-            String consulta = "UPDATE animales SET nombre = ?,especie = ?,raza = ?,sexo = ?,edad = ?,peso = ?,observaciones = ?,fecha_primera_consulta = ?,foto = ? WHERE id = ?";
+            String consulta = "UPDATE Animales SET nombre = ?,especie = ?,raza = ?,sexo = ?,edad = ?,peso = ?,observaciones = ?,fecha_primera_consulta = ?,foto = ? WHERE id = ?";
             pstmt = connection.getConnection().prepareStatement(consulta);
             pstmt = connection.getConnection().prepareStatement(consulta, PreparedStatement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, animalNuevo.getNombre());
@@ -162,7 +162,7 @@ public class DaoAnimal {
         PreparedStatement pstmt;
         try {
             connection = new DBConnect();
-            String consulta = "INSERT INTO animales (nombre,especie,raza,sexo,edad,peso,observaciones,fecha_primera_consulta,foto) VALUES (?,?,?,?,?) ";
+            String consulta = "INSERT INTO Animales (nombre,especie,raza,sexo,edad,peso,observaciones,fecha_primera_consulta,foto) VALUES (?,?,?,?,?,?,?,?,?) ";
             pstmt = connection.getConnection().prepareStatement(consulta, PreparedStatement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, animal.getNombre());
             pstmt.setString(2, animal.getEspecie());
@@ -204,7 +204,7 @@ public class DaoAnimal {
         PreparedStatement pstmt;
         try {
             connection = new DBConnect();
-            String consulta = "DELETE FROM animales WHERE id = ?";
+            String consulta = "DELETE FROM Animales WHERE id = ?";
             pstmt = connection.getConnection().prepareStatement(consulta);
             pstmt.setInt(1, animal.getId());
             int filasAfectadas = pstmt.executeUpdate();

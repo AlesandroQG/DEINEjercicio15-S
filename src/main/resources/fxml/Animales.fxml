@@ -39,6 +39,9 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
@@ -68,18 +71,26 @@
         <Menu mnemonicParsing="false" text="Ayuda" />
       </menus>
     </MenuBar>
-      <FlowPane alignment="CENTER">
+      <FlowPane alignment="CENTER" hgap="10.0">
          <children>
-            <Label text="ANIMALES">
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icono.png" />
+               </image>
+            </ImageView>
+            <Label text="Animales">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
          </children>
+         <VBox.margin>
+            <Insets top="5.0" />
+         </VBox.margin>
       </FlowPane>
       <HBox alignment="CENTER_LEFT">
          <children>
-            <Label text="Label">
+            <Label text="Nombre:">
                <HBox.margin>
                   <Insets right="5.0" />
                </HBox.margin>
@@ -88,6 +99,9 @@
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
+               <tooltip>
+                  <Tooltip text="Filtrar por nombre de animal" />
+               </tooltip>
             </TextField>
          </children>
          <padding>
@@ -97,6 +111,9 @@
             <Insets bottom="10.0" />
          </VBox.margin>
       </HBox>
-      <TableView fx:id="tabla" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+      <TableView fx:id="tabla" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" />
+         </VBox.margin></TableView>
   </children>
 </VBox>

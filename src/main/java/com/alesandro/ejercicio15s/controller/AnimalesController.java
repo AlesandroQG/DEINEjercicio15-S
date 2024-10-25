@@ -9,17 +9,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -49,8 +50,38 @@ public class AnimalesController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Carga inicial
         cargarTabla();
         cargarAnimales();
+        // Context Menu
+        ContextMenu contextMenu = new ContextMenu();
+        MenuItem editarItem = new MenuItem("Editar");
+        MenuItem borrarItem = new MenuItem("Eliminar");
+        contextMenu.getItems().addAll(editarItem,borrarItem);
+        editarItem.setOnAction(this::editar);
+        borrarItem.setOnAction(this::eliminar);
+        tabla.setRowFactory(tv -> {
+            TableRow<Animal> row = new TableRow<>();
+            row.setOnContextMenuRequested(event -> {
+                if (!row.isEmpty()) {
+                    tabla.getSelectionModel().select(row.getItem());
+                    contextMenu.show(row, event.getScreenX(), event.getScreenY());
+                }
+            });
+            return row;
+        });
+        // Event Listener para celdas de la tabla
+        tabla.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
+            deshabilitarMenus(newValue == null);
+        });
+        // Event Listener para el filtro
+        filtroNombre.setOnKeyTyped(keyEvent -> filtrar());
+        // Doble-click para editar
+        tabla.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                editar(null);
+            }
+        });
     }
 
     /**
@@ -79,15 +110,15 @@ public class AnimalesController implements Initializable {
         } else {
             try {
                 Window ventana = tabla.getScene().getWindow();
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Animal.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/DatosAnimal.fxml"));
                 DatosAnimalController controlador = new DatosAnimalController(animal);
                 fxmlLoader.setController(controlador);
                 Scene scene = new Scene(fxmlLoader.load());
                 Stage stage = new Stage();
                 stage.setScene(scene);
                 stage.setResizable(false);
-                //stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/Olimpiadas.png")));
-                stage.setTitle("Editar Animal");
+                stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/icono.png")));
+                stage.setTitle("Editar Animal - Animales");
                 stage.initOwner(ventana);
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.showAndWait();
@@ -110,7 +141,19 @@ public class AnimalesController implements Initializable {
         if (animal == null) {
             alerta("Tienes que seleccionar un animal de la lista");
         } else {
-            //
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.initOwner(tabla.getScene().getWindow());
+            alert.setHeaderText(null);
+            alert.setTitle("Confirmación");
+            alert.setContentText("¿Estás seguro que quieres eliminar ese animal?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK){
+                if (DaoAnimal.eliminar(animal)) {
+                    confirmacion("Animal eliminado correctamente");
+                } else {
+                    alerta("No se ha podido eliminar ese animal, por favor inténtelo de nuevo");
+                }
+            }
         }
     }
 
@@ -123,15 +166,15 @@ public class AnimalesController implements Initializable {
     void nuevo(ActionEvent event) {
         try {
             Window ventana = tabla.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Animal.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/DatosAnimal.fxml"));
             DatosAnimalController controlador = new DatosAnimalController();
             fxmlLoader.setController(controlador);
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setResizable(false);
-            //stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/Olimpiadas.png")));
-            stage.setTitle("Añadir Animal");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/icono.png")));
+            stage.setTitle("Añadir Animal - Animales");
             stage.initOwner(ventana);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
@@ -143,10 +186,59 @@ public class AnimalesController implements Initializable {
     }
 
     /**
+     * Función que filtra la tabla por nombre
+     */
+    public void filtrar() {
+        String valor = filtroNombre.getText();
+        if (valor != null) {
+            valor = valor.toLowerCase();
+            if (valor.isEmpty()) {
+                tabla.setItems(masterData);
+            } else {
+                filteredData.clear();
+                for (Animal animal : masterData) {
+                    String nombre = animal.getNombre();
+                    nombre = nombre.toLowerCase();
+                    if (nombre.contains(valor)) {
+                        filteredData.add(animal);
+                    }
+                }
+                tabla.setItems(filteredData);
+            }
+        }
+    }
+
+    /**
+     * Función para habilitar o deshabilitar los botones de edición del menu
+     *
+     * @param deshabilitado true/false
+     */
+    public void deshabilitarMenus(boolean deshabilitado) {
+        btnEditar.setDisable(deshabilitado);
+        btnEliminar.setDisable(deshabilitado);
+    }
+
+    /**
      * Función que carga las columnas de la tabla
      */
     public void cargarTabla() {
-        //
+        TableColumn<Animal, Integer> colId = new TableColumn<>("ID");
+        colId.setCellValueFactory(new PropertyValueFactory("id"));
+        TableColumn<Animal, String> colNombre = new TableColumn<>("NOMBRE");
+        colNombre.setCellValueFactory(new PropertyValueFactory("nombre"));
+        TableColumn<Animal, String> colEspecie = new TableColumn<>("ESPECIE");
+        colEspecie.setCellValueFactory(new PropertyValueFactory("especie"));
+        TableColumn<Animal, String> colRaza = new TableColumn<>("RAZA");
+        colRaza.setCellValueFactory(new PropertyValueFactory("raza"));
+        TableColumn<Animal, String> colSexo = new TableColumn<>("SEXO");
+        colSexo.setCellValueFactory(new PropertyValueFactory("sexo"));
+        TableColumn<Animal, Integer> colEdad = new TableColumn<>("EDAD");
+        colEdad.setCellValueFactory(new PropertyValueFactory("edad"));
+        TableColumn<Animal, Integer> colPeso = new TableColumn<>("PESO");
+        colPeso.setCellValueFactory(new PropertyValueFactory("peso"));
+        TableColumn<Animal, LocalDate> colFecha = new TableColumn<>("PRIMERA CONSULTA");
+        colFecha.setCellValueFactory(new PropertyValueFactory("fecha_primera_consulta"));
+        tabla.getColumns().addAll(colId,colNombre,colEspecie,colRaza,colSexo,colEdad,colPeso,colFecha);
     }
 
     /**
@@ -157,7 +249,7 @@ public class AnimalesController implements Initializable {
     public void alerta(String texto) {
         Alert alerta = new Alert(Alert.AlertType.ERROR);
         alerta.setHeaderText(null);
-        alerta.setTitle("ERROR");
+        alerta.setTitle("Error");
         alerta.setContentText(texto);
         alerta.showAndWait();
     }
