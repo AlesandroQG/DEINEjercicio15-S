@@ -20,4 +20,6 @@ La estructura del proyecto es la siguiente:
             - `Animales.fxml`: Ventana principal de la aplicación
             - `DatosAnimal.fxml`: Ventana para añadir un nuevo animal o editar uno existente
         - `images`: Imágenes de la aplicación
+        - `sql`:
+          - `animales.sql`: Fichero para la creación de la base de datos
         - `style`: Estilos de la aplicación
